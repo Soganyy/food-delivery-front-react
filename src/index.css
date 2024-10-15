@@ -1,0 +1,21 @@
+* {
+  font-family: "Omnes Bold";
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Set the custom font with a fallback */
+}
+
+@font-face {
+  font-family: "Omnes Bold"; /* Font family name */
+  font-style: normal; /* Set the font style */
+  font-weight: bold; /* Set the font weight to bold */
+  src: local("Omnes Bold"), url("Omnes Bold.woff") format("woff"); /* Specify the source */
+}
+
+code {
+  font-family: "Omnes Bold"; /* Apply the custom font to code elements */
+}
