@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./landing.css";
-import courier from "../../../assets/courier.png";
-import merchant from "../../../assets/woltMerchant.jpg";
-import userBackground from "../../../assets/userWolt.avif";
+import courier from "./../../assets/courier.png";
+import merchant from "./../../assets/woltMerchant.jpg";
+import userBackground from "./../../assets/userWolt.avif";
 import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {

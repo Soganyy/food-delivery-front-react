@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MessageModal from "../../../message-modal/message-modal";
-import LoginForm from "../../../login-form/login-form";
-import { decodeToken } from "../../../../helpers/token-helper";
-import { useCourierService } from "../../../../service/auth/useCourierService";
+import { decodeToken } from "../../../helpers/token-helper";
+import { useCourierService } from "../../../service/auth/useCourierService";
+import LoginForm from "../../../components/login-form/login-form";
+import MessageModal from "../../../components/message-modal/message-modal";
 
 const CourierLogin = () => {
   const { loginCourier } = useCourierService();
@@ -17,6 +17,7 @@ const CourierLogin = () => {
     const decodedToken = decodeToken(result.access_token);
 
     if (decodedToken) {
+      sessionStorage.setItem("nonDecToken", result.access_token);
       sessionStorage.setItem("token", JSON.stringify(decodedToken));
       navigate("/home-courier");
     } else {

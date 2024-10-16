@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useMerchantService } from "../../../../service/auth/useMerchantService";
-import { decodeToken } from "../../../../helpers/token-helper";
+import { useMerchantService } from "../../../service/auth/useMerchantService";
+import { decodeToken } from "../../../helpers/token-helper";
 import { useNavigate } from "react-router-dom";
-import MessageModal from "../../../message-modal/message-modal";
-import LoginForm from "../../../login-form/login-form";
+import MessageModal from "../../../components/message-modal/message-modal";
+import LoginForm from "../../../components/login-form/login-form";
 
 const MerchantLogin = () => {
   const { loginMerchant } = useMerchantService();

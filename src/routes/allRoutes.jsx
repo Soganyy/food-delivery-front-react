@@ -1,7 +1,7 @@
-import CourierLogin from "../components/pages/Courier/CourierLogin/CourierLogin";
-import CourierHomePage from "../components/pages/Courier/Home/CourierHome";
-import LandingPage from "../components/pages/Landing/LandingPage";
-import MerchantLogin from "../components/pages/Merchant/MerchantLogin/MerchantLogin";
+import CourierLogin from "../pages/Courier/CourierLogin/CourierLogin";
+import CourierHomePage from "../pages/Courier/Home/CourierHome";
+import LandingPage from "../pages/Landing/LandingPage";
+import MerchantLogin from "../pages/Merchant/MerchantLogin/MerchantLogin";
 
 const authProtectedRoutes = [];
 
