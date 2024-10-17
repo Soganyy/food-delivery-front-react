@@ -1,56 +1,51 @@
-import React, { useState, useCallback } from "react";
-import DeliveryMap from "../../../components/DeliveryMap/DeliveryMap";
-import "./courierHome.css";
-import CourierGame from "../../../components/mini-game/mini-game";
+import React, { useEffect, useRef, useState } from "react";
+import { io } from "socket.io-client";
 
-function CourierHomePage() {
-  const [merchantLocation] = useState({ lat: 40.385553, lng: 49.803789 });
-  const [deliveryLocation] = useState({ lat: 40.392769, lng: 49.791177 });
-  const [price] = useState(10);
-  const [status, setStatus] = useState(null);
-  const [deliveries, setDeliveries] = useState([]);
+const CourierHomePage = () => {
+  const socket = useRef(null);
+  const [deliveryRequests, setDeliveryRequests] = useState([]);
 
-  const handleAccept = useCallback(() => {
-    setStatus("Accepted");
+  useEffect(() => {
+    socket.current = io("http://localhost:1025", {
+      transports: ["websocket"],
+      reconnection: true,
+      query: {
+        courierId: JSON.parse(sessionStorage.getItem("token")).courierId,
+      },
+    });
+
+    socket.current.on("connect", () => {
+      console.log("Connected to the WebSocket server as Courier:", socket.current.id);
+    });
+
+    socket.current.on("connect_error", (error) => {
+      console.error("Connection Error:", error);
+    });
+
+    socket.current.on("deliveryRequest", (order) => {
+      console.log("New delivery request:", order);
+      setDeliveryRequests((prevRequests) => [...prevRequests, order]);
+    });
   }, []);
 
-  const handleDecline = useCallback(() => {
-    setStatus("Declined");
-  }, []);
+  const respondToDeliveryRequest = (orderId, accepted) => {
+    socket.current.emit(`courierResponse-courier-1`, { orderId, accepted });
+    alert(`You have ${accepted ? "accepted" : "declined"} the delivery request.`);
+    setDeliveryRequests((prevRequests) => prevRequests.filter((request) => request.orderId !== orderId));
+  };
 
   return (
-    <>
-      <h1 className="text-center">Pending Delivery Requests</h1>
-      {deliveries.length > 0 ? (
-        <div className="container">
-          <DeliveryMap merchant={merchantLocation} delivery={deliveryLocation} />
-
-          {/* Delivery Price */}
-          <div style={{ marginTop: "20px" }}>
-            <h2>Delivery Price: ${price}</h2>
-          </div>
-
-          {/* Accept / Decline Buttons */}
-          <div style={{ margin: "20px" }}>
-            <button onClick={handleAccept} className="button-accept m-5">
-              Accept
-            </button>
-            <button onClick={handleDecline} className="button-decline">
-              Decline
-            </button>
-          </div>
-
-          {/* Display status */}
-          {status && <h3 className="status-message">You have {status} the delivery.</h3>}
-        </div>
-      ) : (
-        <>
-          <h1 className="text-center">You do not have any delivery requests!</h1>
-          <CourierGame />
-        </>
-      )}
-    </>
+    <div>
+      <h1>Courier Dashboard</h1>
+      <ul>
+        {deliveryRequests.map((request) => (
+          <li key={request.orderId}>
+            <p>Order ID: {request.orderId}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
-}
+};
 
 export default CourierHomePage;

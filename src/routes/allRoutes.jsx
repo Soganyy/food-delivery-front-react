@@ -1,9 +1,10 @@
 import CourierLogin from "../pages/Courier/CourierLogin/CourierLogin";
 import CourierHomePage from "../pages/Courier/Home/CourierHome";
 import LandingPage from "../pages/Landing/LandingPage";
+import MerchantHome from "../pages/Merchant/Home/Home";
 import MerchantLogin from "../pages/Merchant/MerchantLogin/MerchantLogin";
 
-const authProtectedRoutes = [];
+const authProtectedRoutes = [{ path: "/home-merchant", component: <MerchantHome /> }];
 
 const courierProtected = [{ path: "/home-courier", component: <CourierHomePage /> }];
 

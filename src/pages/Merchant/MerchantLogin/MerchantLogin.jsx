@@ -17,8 +17,8 @@ const MerchantLogin = () => {
     const decodedToken = decodeToken(result.access_token);
 
     if (decodedToken) {
-      sessionStorage.setItem("token", decodedToken);
-      navigate("/");
+      sessionStorage.setItem("token", JSON.stringify(decodedToken));
+      navigate("/home-merchant");
     } else {
       setIsLoginError(true);
       setTimeout(function () {

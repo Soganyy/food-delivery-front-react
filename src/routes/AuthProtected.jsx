@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
 const AuthProtected = (props) => {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState({});
 
   useEffect(() => {
-    setToken(sessionStorage.getItem("token"));
+    const token = JSON.parse(sessionStorage.getItem("token"));
+    setToken(token);
   }, []);
 
   if (!token) {
